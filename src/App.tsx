@@ -1,7 +1,6 @@
 import React from "react";
 import {
   BrowserRouter as Router,
-  Navigate,
   Outlet,
   Route,
   Routes,
@@ -23,6 +22,7 @@ function App() {
               <Route path="/transfer" element={<h1>transfer</h1>}></Route>
               <Route path="/history" element={<h1>history</h1>}></Route>
               <Route path="/bills" element={<h1>bills</h1>}></Route>
+              <Route path="*" element={<h1>Not Found</h1>}></Route>
             </Route>
           </Routes>
         </Sidebar>
