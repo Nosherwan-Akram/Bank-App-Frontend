@@ -20,22 +20,20 @@ import { createSideBarLink } from "./helper";
 import { Main, AppBar, DrawerHeader } from "./sidebar.styles";
 import { drawerWidth } from "./constant";
 
-const sidebarLinks = [
-  createSideBarLink("Dashboard", "/dashboard", <Dashboard />),
-  createSideBarLink("Funds Transfer", "/transfer", <AttachMoney />),
-  createSideBarLink("Transaction History", "/history", <History />),
-  createSideBarLink("Utility Bills", "/bills", <Receipt />),
-];
-
 const Sidebar = ({ children }: { children: any }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleDrawerOpen = () => setOpen(true);
-
   const handleDrawerClose = () => setOpen(false);
 
+  const sidebarLinks = [
+    createSideBarLink("Dashboard", "/dashboard", <Dashboard />),
+    createSideBarLink("Funds Transfer", "/transfer", <AttachMoney />),
+    createSideBarLink("Transaction History", "/history", <History />),
+    createSideBarLink("Utility Bills", "/bills", <Receipt />),
+  ];
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
