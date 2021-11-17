@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -16,7 +16,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Dashboard, AttachMoney, Receipt, History } from "@mui/icons-material";
-import { Route, Routes, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { createSideBarLink } from "./helper";
 
 const drawerWidth = 240;
 
@@ -50,7 +51,6 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: "maroon",
   boxShadow: "0px 0px 0px 0px",
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -73,16 +73,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Sidebar = ({ children }: { children: any }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const handleDrawerOpen = () => setOpen(true);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerClose = () => setOpen(false);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -127,14 +123,8 @@ const Sidebar = ({ children }: { children: any }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {sidebarLinks.map(({ name, path, icon }) => (
-            <ListItem
-              button
-              key={name}
-              onClick={() => {
-                navigate(path);
-              }}
-            >
+          {sidebarLinks.map(({ name, path, icon }, index) => (
+            <ListItem button key={index} onClick={() => navigate(path)}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText>{name}</ListItemText>
             </ListItem>
@@ -149,12 +139,6 @@ const Sidebar = ({ children }: { children: any }) => {
     </Box>
   );
 };
-
-const createSideBarLink = (name: any, path: any, icon: any) => ({
-  name,
-  path,
-  icon,
-});
 
 const sidebarLinks = [
   createSideBarLink("Dashboard", "/dashboard", <Dashboard />),
