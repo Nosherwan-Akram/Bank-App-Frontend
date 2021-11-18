@@ -9,6 +9,7 @@ import {
 import { CssBaseline } from "@mui/material";
 import Sidebar from "components/sidebar/sidebar.component";
 import Dashboard from "pages/dashboard/dashboard.page";
+import { Transfer } from "transfer/transfer.page";
 // import './App.css';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Outlet />}>
               <Route path="dashboard" element={<Dashboard />}></Route>
-              <Route path="transfer" element={<h1>transfer</h1>}></Route>
+              <Route path="transfer" element={<Transfer />}></Route>
               <Route path="history" element={<h1>history</h1>}></Route>
               <Route path="bills" element={<h1>bills</h1>}></Route>
               <Route path="*" element={<h1>Not Found Here</h1>}></Route>

@@ -11,13 +11,31 @@ import {
   TableHead,
   TableRow,
   Button,
+  TableFooter,
+  TablePagination,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { users } from "../../../../data/user";
-import { StyledTableCell, StyledTableRow } from "./funds-transfer.styles";
+import { users } from "../data/user";
+import { StyledTableCell, StyledTableRow } from "./transfer.styles";
 import { useNavigate } from "react-router-dom";
 
-export const FundsTransfer = () => {
+export const Transfer = () => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const [beneficiaries, setBeneficiaries] = useState([
     {} as {
       accountNumber: string;
@@ -52,7 +70,7 @@ export const FundsTransfer = () => {
         {!loading && (
           <>
             <Grid container justifyContent="space-between" alignItems="center">
-              <h2>Transfer Funds (Last 3 Beneficiaries)</h2>
+              <h2>Transfer Funds</h2>
               <Button endIcon={<Add />} variant="contained">
                 Add Beneficiary
               </Button>
@@ -71,9 +89,8 @@ export const FundsTransfer = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {beneficiaries
-                    .slice(0, 3)
-                    .map(({ accountNumber, firstName, lastName, bankName }) => (
+                  {beneficiaries.map(
+                    ({ accountNumber, firstName, lastName, bankName }) => (
                       <StyledTableRow key={accountNumber}>
                         <StyledTableCell align="center">
                           {firstName} {lastName}
@@ -87,14 +104,39 @@ export const FundsTransfer = () => {
                         <StyledTableCell align="center">
                           <Button
                             variant="outlined"
-                            onClick={() => navigate(`/transfer`)}
+                            onClick={() => navigate(`/dashboard`)}
                           >
                             Transfer Funds
                           </Button>
                         </StyledTableCell>
                       </StyledTableRow>
-                    ))}
+                    )
+                  )}
                 </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[
+                        5,
+                        10,
+                        25,
+                        { label: "All", value: -1 },
+                      ]}
+                      colSpan={12}
+                      count={beneficiaries.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          "aria-label": "rows per page",
+                        },
+                        native: true,
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </TableRow>
+                </TableFooter>
               </Table>
             </TableContainer>
           </>

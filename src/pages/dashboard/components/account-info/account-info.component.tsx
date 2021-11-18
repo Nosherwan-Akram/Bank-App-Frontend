@@ -7,7 +7,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import { users } from "../../../../data/user";
+import { users } from "data/user";
 
 export const AccountInfo = () => {
   const [user, setUser] = useState({
@@ -17,6 +17,7 @@ export const AccountInfo = () => {
     accountNumber: "",
   });
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
@@ -31,6 +32,7 @@ export const AccountInfo = () => {
       clearTimeout(timeout);
     };
   }, []);
+
   return (
     <Paper elevation={3} variant="elevation">
       <Box p={3}>
