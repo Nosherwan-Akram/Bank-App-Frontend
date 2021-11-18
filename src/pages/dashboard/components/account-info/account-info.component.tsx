@@ -8,14 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import { users } from "data/user";
+import { IUser } from "types";
 
 export const AccountInfo = () => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    balance: 0,
-    accountNumber: "",
-  });
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

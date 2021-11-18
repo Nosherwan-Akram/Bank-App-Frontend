@@ -18,6 +18,7 @@ import { Add } from "@mui/icons-material";
 import { users } from "../data/user";
 import { StyledTableCell, StyledTableRow } from "./transfer.styles";
 import { useNavigate } from "react-router-dom";
+import { IBeneficiary } from "types";
 
 export const Transfer = () => {
   const [page, setPage] = useState(0);
@@ -36,13 +37,8 @@ export const Transfer = () => {
     setPage(0);
   };
 
-  const [beneficiaries, setBeneficiaries] = useState([
-    {} as {
-      accountNumber: string;
-      firstName: string;
-      lastName: string;
-      bankName: string;
-    },
+  const [beneficiaries, setBeneficiaries] = useState<IBeneficiary[]>([
+    {} as IBeneficiary,
   ]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

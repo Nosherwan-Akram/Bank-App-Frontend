@@ -2,18 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Paper, Box, Grid, CircularProgress } from "@mui/material";
 import { users } from "data/user";
 import Chart from "react-apexcharts";
+import { ITransaction } from "types";
 
 export const TransferGraph = () => {
-  const [transactions, setTransactions] = useState([
-    {} as {
-      transactionId: string;
-      transactionAmount: number;
-      transactionAt: Date;
-      transactionType: string;
-      transactionAccountNumber: string;
-      transactionAccountTitle: string;
-      balanceAfterTransaction: number;
-    },
+  const [transactions, setTransactions] = useState<ITransaction[]>([
+    {} as ITransaction,
   ]);
   const [loading, setLoading] = useState(true);
 
