@@ -8,6 +8,7 @@ import {
 
 import { CssBaseline } from "@mui/material";
 import Sidebar from "components/sidebar/sidebar.component";
+import { TransactionHistory } from "pages/transaction-history/transaction-history.page";
 // import './App.css';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
             <Route path="/" element={<Outlet />}>
               <Route path="/dashboard" element={<h1>dashboard</h1>}></Route>
               <Route path="/transfer" element={<h1>transfer</h1>}></Route>
-              <Route path="/history" element={<h1>history</h1>}></Route>
+              <Route path="/history" element={<TransactionHistory />}></Route>
               <Route path="/bills" element={<h1>bills</h1>}></Route>
               <Route path="*" element={<h1>Not Found</h1>}></Route>
             </Route>
