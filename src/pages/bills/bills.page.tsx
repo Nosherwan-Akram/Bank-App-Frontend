@@ -12,11 +12,12 @@ import {
   TableRow,
   TableFooter,
   TablePagination,
+  Button,
 } from "@mui/material";
 import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
 
-export const TransactionHistory = () => {
+export const Bills = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -33,15 +34,14 @@ export const TransactionHistory = () => {
     setPage(0);
   };
 
-  const [transactions, setTransactions] = useState([
+  const [bills, setBills] = useState([
     {} as {
-      transactionId: string;
-      transactionAmount: number;
-      transactionAt: Date;
-      transactionType: string;
-      transactionAccountNumber: string;
-      transactionAccountTitle: string;
-      balanceAfterTransaction: number;
+      referenceNumber: string;
+      amount: number;
+      amountAfterDueDate: number;
+      dueDate: Date;
+      billType: string;
+      paid: boolean;
     },
   ]);
   const [loading, setLoading] = useState(true);
@@ -49,12 +49,12 @@ export const TransactionHistory = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-      setTransactions(users[0].transactions.reverse());
+      setBills(users[0].bills.reverse().slice(page, rowsPerPage));
     }, 1200);
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [page, rowsPerPage]);
 
   return (
     <Paper elevation={3} variant="elevation">
@@ -68,61 +68,52 @@ export const TransactionHistory = () => {
         )}
         {!loading && (
           <>
-            <h2>Transaction History</h2>
+            <h2>Bills</h2>
             <Divider sx={{ bgcolor: "background.paper" }} />
             <br />
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
                   <TableRow>
+                    <StyledTableCell align="center">Bill Type</StyledTableCell>
                     <StyledTableCell align="center">
-                      Account Title
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      Account Number
+                      Reference Number
                     </StyledTableCell>
                     <StyledTableCell align="center">Amount</StyledTableCell>
                     <StyledTableCell align="center">
-                      Transaction Type
+                      Late Submission Amount
                     </StyledTableCell>
-                    <StyledTableCell align="center">
-                      New Balance
-                    </StyledTableCell>
-                    <StyledTableCell align="center">Date</StyledTableCell>
+                    <StyledTableCell align="center">Status</StyledTableCell>
+                    <StyledTableCell align="center">Due Date</StyledTableCell>
+                    <StyledTableCell align="center">Actions</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {transactions.map((transaction) => (
-                    <StyledTableRow key={transaction.transactionId}>
+                  {bills.map((bill) => (
+                    <StyledTableRow key={bill.billType}>
                       <StyledTableCell align="center">
-                        {transaction.transactionAccountTitle}
+                        {bill.billType}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {transaction.transactionAccountNumber}
+                        {bill.referenceNumber}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        ${" "}
-                        {Math.ceil(
-                          transaction.transactionAmount
-                        ).toLocaleString()}
+                        $ {Math.ceil(bill.amount).toLocaleString()}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        $ {Math.ceil(bill.amountAfterDueDate).toLocaleString()}
                       </StyledTableCell>
                       <StyledTableCell
-                        transactionType={transaction.transactionType}
+                        transactionType={bill.paid ? "credit" : "debit"}
                         align="center"
                       >
-                        {transaction.transactionType}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        transactionType={transaction.transactionType}
-                        align="center"
-                      >
-                        ${" "}
-                        {Math.ceil(
-                          transaction.balanceAfterTransaction
-                        ).toLocaleString()}
+                        {bill.paid ? "paid" : "unpaid"}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {new Date(transaction.transactionAt).toLocaleString()}
+                        {new Date(bill.dueDate).toLocaleDateString()}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button variant="outlined">Pay</Button>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
@@ -137,7 +128,7 @@ export const TransactionHistory = () => {
                         { label: "All", value: -1 },
                       ]}
                       colSpan={3}
-                      count={transactions.length}
+                      count={bills.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       SelectProps={{
