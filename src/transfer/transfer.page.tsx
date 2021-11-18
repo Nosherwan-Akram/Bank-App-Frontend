@@ -20,8 +20,9 @@ import { StyledTableCell, StyledTableRow } from "./transfer.styles";
 import { useNavigate } from "react-router-dom";
 
 export const Transfer = () => {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -36,15 +37,16 @@ export const Transfer = () => {
   };
 
   const [beneficiaries, setBeneficiaries] = useState([
-    {
-      accountNumber: "",
-      firstName: "",
-      lastName: "",
-      bankName: "",
+    {} as {
+      accountNumber: string;
+      firstName: string;
+      lastName: string;
+      bankName: string;
     },
   ]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
