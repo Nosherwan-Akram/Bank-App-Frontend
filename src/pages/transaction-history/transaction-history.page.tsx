@@ -17,7 +17,7 @@ import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
 
 export const TransactionHistory = () => {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (
@@ -69,7 +69,7 @@ export const TransactionHistory = () => {
         {!loading && (
           <>
             <h2>Transaction History</h2>
-            <Divider sx={{ bgcolor: "background.paper" }} />
+            <Divider />
             <br />
             <TableContainer component={Paper}>
               <Table>
@@ -136,7 +136,7 @@ export const TransactionHistory = () => {
                         25,
                         { label: "All", value: -1 },
                       ]}
-                      colSpan={3}
+                      colSpan={12}
                       count={transactions.length}
                       rowsPerPage={rowsPerPage}
                       page={page}

@@ -72,6 +72,7 @@ export const Transfer = () => {
               </Button>
             </Grid>
             <Divider />
+            <br />
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>

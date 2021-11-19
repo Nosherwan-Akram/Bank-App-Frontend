@@ -16,9 +16,12 @@ import {
 } from "@mui/material";
 import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
+import { Add } from "@mui/icons-material";
+import { Popup } from "./components/popup.component";
 
 export const Bills = () => {
-  const [page, setPage] = React.useState(0);
+  const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (
@@ -49,12 +52,12 @@ export const Bills = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-      setBills(users[0].bills.reverse().slice(page, rowsPerPage));
+      setBills(users[0].bills.reverse());
     }, 1200);
     return () => {
       clearTimeout(timeout);
     };
-  }, [page, rowsPerPage]);
+  }, []);
 
   return (
     <Paper elevation={3} variant="elevation">
@@ -68,8 +71,18 @@ export const Bills = () => {
         )}
         {!loading && (
           <>
-            <h2>Bills</h2>
-            <Divider sx={{ bgcolor: "background.paper" }} />
+            {open && <Popup open={open} onClose={() => setOpen(false)} />}
+            <Grid container justifyContent="space-between" alignItems="center">
+              <h2>Bills</h2>
+              <Button
+                endIcon={<Add />}
+                variant="contained"
+                onClick={() => setOpen(true)}
+              >
+                Add Bill
+              </Button>
+            </Grid>
+            <Divider />
             <br />
             <TableContainer component={Paper}>
               <Table>
@@ -113,7 +126,13 @@ export const Bills = () => {
                         {new Date(bill.dueDate).toLocaleDateString()}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button variant="outlined">Pay</Button>
+                        <Button
+                          disabled={bill.paid}
+                          variant="contained"
+                          fullWidth
+                        >
+                          Pay
+                        </Button>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
@@ -127,7 +146,7 @@ export const Bills = () => {
                         25,
                         { label: "All", value: -1 },
                       ]}
-                      colSpan={3}
+                      colSpan={12}
                       count={bills.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
