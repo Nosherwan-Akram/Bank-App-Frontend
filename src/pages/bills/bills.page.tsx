@@ -57,7 +57,6 @@ export const Bills = () => {
     //       Math.floor(user.balance) - (billToPay.amount || 0),
     //   },
     // });
-    console.log(billToPay);
   };
 
   useEffect(() => {

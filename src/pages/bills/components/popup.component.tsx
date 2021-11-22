@@ -35,8 +35,8 @@ export const Popup = ({ open, onClose }: popupProps) => {
     //     paid: false,
     //   },
     // });
-    console.log(data);
   };
+  
   return (
     <div>
       <Dialog open={open} onClose={onClose} fullWidth>
