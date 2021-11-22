@@ -3,8 +3,10 @@ import { Paper, Box, Grid, CircularProgress } from "@mui/material";
 import { users } from "data/user";
 import Chart from "react-apexcharts";
 import { ITransaction } from "types";
+// import { useUserStore } from "state";
 
 export const TransferGraph = () => {
+  // const { state: user } = useUserStore();
   const [transactions, setTransactions] = useState<ITransaction[]>([
     {} as ITransaction,
   ]);
@@ -14,6 +16,7 @@ export const TransferGraph = () => {
     const timeout = setTimeout(() => {
       setLoading(false);
       setTransactions(users[0].transactions);
+      // setTransactions(user.transactions);
     }, 1200);
     return () => {
       clearTimeout(timeout);

@@ -19,8 +19,10 @@ import { users } from "../data/user";
 import { StyledTableCell, StyledTableRow } from "./transfer.styles";
 import { useNavigate } from "react-router-dom";
 import { IBeneficiary } from "types";
+// import { useUserStore } from "state";
 
 export const Transfer = () => {
+  // const { state: user } = useUserStore();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -47,6 +49,7 @@ export const Transfer = () => {
     const timeout = setTimeout(() => {
       setLoading(false);
       setBeneficiaries(users[0].beneficiaries.reverse());
+      // setBeneficiaries(user.beneficiaries.reverse());
     }, 1200);
     return () => {
       clearTimeout(timeout);
@@ -101,7 +104,9 @@ export const Transfer = () => {
                         <StyledTableCell align="center">
                           <Button
                             variant="outlined"
-                            onClick={() => navigate(`/dashboard`)}
+                            onClick={() =>
+                              navigate(`/transfer/${accountNumber}`)
+                            }
                           >
                             Transfer Funds
                           </Button>

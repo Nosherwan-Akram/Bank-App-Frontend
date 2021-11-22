@@ -15,8 +15,10 @@ import {
 } from "@mui/material";
 import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
+// import { useUserStore } from "state";
 
 export const TransactionHistory = () => {
+  // const { state: user } = useUserStore();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -50,6 +52,7 @@ export const TransactionHistory = () => {
     const timeout = setTimeout(() => {
       setLoading(false);
       setTransactions(users[0].transactions.reverse());
+      // setTransactions(user.transactions.reverse());
     }, 1200);
     return () => {
       clearTimeout(timeout);

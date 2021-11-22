@@ -18,11 +18,14 @@ import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
 import { Add } from "@mui/icons-material";
 import { Popup } from "./components/popup.component";
+import { IBills } from "types";
+// import { useUserStore } from "state";
 
 export const Bills = () => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const { state: user, dispatch } = useUserStore();
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -37,22 +40,31 @@ export const Bills = () => {
     setPage(0);
   };
 
-  const [bills, setBills] = useState([
-    {} as {
-      referenceNumber: string;
-      amount: number;
-      amountAfterDueDate: number;
-      dueDate: Date;
-      billType: string;
-      paid: boolean;
-    },
-  ]);
+  const [bills, setBills] = useState([{} as IBills]);
   const [loading, setLoading] = useState(true);
+
+  const payBill = (billToPay: IBills) => {
+    // dispatch({
+    //   type: "payBill",
+    //   payload: {
+    //     transactionId: "fd53d0b6-dcba-48a9-a330-79d3adb4fde1",
+    //     transactionAmount: billToPay.amount,
+    //     transactionAt: new Date(),
+    //     transactionType: "debit",
+    //     transactionAccountNumber: billToPay.referenceNumber,
+    //     transactionAccountTitle: billToPay.billType,
+    //     balanceAfterTransaction:
+    //       Math.floor(user.balance) - (billToPay.amount || 0),
+    //   },
+    // });
+    console.log(billToPay);
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
       setBills(users[0].bills.reverse());
+      // if (user.bills) setBills(user.bills.reverse());
     }, 1200);
     return () => {
       clearTimeout(timeout);
@@ -103,7 +115,7 @@ export const Bills = () => {
                 </TableHead>
                 <TableBody>
                   {bills.map((bill) => (
-                    <StyledTableRow key={bill.billType}>
+                    <StyledTableRow key={bill.referenceNumber}>
                       <StyledTableCell align="center">
                         {bill.billType}
                       </StyledTableCell>
@@ -130,6 +142,7 @@ export const Bills = () => {
                           disabled={bill.paid}
                           variant="contained"
                           fullWidth
+                          onClick={() => payBill(bill)}
                         >
                           Pay
                         </Button>

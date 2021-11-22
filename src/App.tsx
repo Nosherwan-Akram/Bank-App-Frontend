@@ -12,25 +12,32 @@ import { TransactionHistory } from "pages/transaction-history/transaction-histor
 import { Bills } from "pages/bills/bills.page";
 import Dashboard from "pages/dashboard/dashboard.page";
 import { Transfer } from "transfer/transfer.page";
-// import './App.css';
+// import { UserProvider } from "state";
+// import { Transaction } from "pages/transaction/transaction.page";
 
 function App() {
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Router>
-        <Sidebar>
-          <Routes>
-            <Route path="/" element={<Outlet />}>
-              <Route path="dashboard" element={<Dashboard />}></Route>
-              <Route path="transfer" element={<Transfer />}></Route>
-              <Route path="history" element={<TransactionHistory />}></Route>
-              <Route path="bills" element={<Bills />}></Route>
-              <Route path="*" element={<h1>Not Found</h1>}></Route>
-            </Route>
-          </Routes>
-        </Sidebar>
-      </Router>
+      {/* <UserProvider> */}
+        <CssBaseline />
+        <Router>
+          <Sidebar>
+            <Routes>
+              <Route path="/" element={<Outlet />}>
+                <Route path="dashboard" element={<Dashboard />}></Route>
+                <Route path="transfer" element={<Transfer />}></Route>
+                {/* <Route
+                  path="transfer/:accountNumber"
+                  element={<Transaction />}
+                ></Route> */}
+                <Route path="history" element={<TransactionHistory />}></Route>
+                <Route path="bills" element={<Bills />}></Route>
+                <Route path="*" element={<h1>Not Found</h1>}></Route>
+              </Route>
+            </Routes>
+          </Sidebar>
+        </Router>
+      {/* </UserProvider> */}
     </React.Fragment>
   );
 }
