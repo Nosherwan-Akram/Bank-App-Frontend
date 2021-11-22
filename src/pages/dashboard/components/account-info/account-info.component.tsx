@@ -9,8 +9,11 @@ import {
 } from "@mui/material";
 import { users } from "data/user";
 import { IUser } from "types";
+// import { useUserStore } from "state";
+
 
 export const AccountInfo = () => {
+  // const { state: userState } = useUserStore();
   const [user, setUser] = useState<IUser>({} as IUser);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +25,14 @@ export const AccountInfo = () => {
         lastName: users[0].lastName,
         balance: users[0].balance,
         accountNumber: users[0].accountNumber,
+        uniqueId:"",
+        bankName:"",
+        email:"",
+        bills:[],
+        transactions:[],
+        beneficiaries:[]
       });
+      // setUser(userState);
     }, 1000);
     return () => {
       clearTimeout(timeout);
