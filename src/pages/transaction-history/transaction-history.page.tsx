@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { users } from "data/user";
 import { StyledTableCell, StyledTableRow } from "../../components";
+import { ITransaction } from "types";
 // import { useUserStore } from "state";
 
 export const TransactionHistory = () => {
@@ -36,16 +37,9 @@ export const TransactionHistory = () => {
   };
 
   const [transactions, setTransactions] = useState([
-    {} as {
-      transactionId: string;
-      transactionAmount: number;
-      transactionAt: Date;
-      transactionType: string;
-      transactionAccountNumber: string;
-      transactionAccountTitle: string;
-      balanceAfterTransaction: number;
-    },
+    {} as ITransaction
   ]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
